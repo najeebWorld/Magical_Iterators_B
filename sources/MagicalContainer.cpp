@@ -86,23 +86,13 @@ vector<int> MagicalContainer::getElements() const
 // Checks if a number is prime
 bool MagicalContainer::isPrime(int num) const
 {
-    // Numbers less than or equal to 1 are not prime
     if (num <= 1)
         return false;
-    // 2 is a prime number
-    if (num == 2)
-        return true;
-    // Even numbers other than 2 are not prime
-    if (num % 2 == 0)
-        return false;
-    // Check for factors other than 2
-    for (int i = 3; i * i <= num; i += 2)
+    for (int i = 2; i * i <= num; ++i)
     {
-        // If a factor is found, the number is not prime
         if (num % i == 0)
             return false;
     }
-    // The number is prime
     return true;
 }
 
@@ -352,17 +342,10 @@ MagicalContainer::SideCrossIterator::SideCrossIterator(MagicalContainer& Magical
 // It alternates between beginning and end, satisfying the O(1) condition.
 int MagicalContainer::SideCrossIterator::operator*() const
 {
-    size_t index;
-    if (currentPosition % 2 == 0)
-    {
-        index = currentPosition / 2;
-    }
-    else
-    {
-        index = magicContainer.size() - 1 - ((currentPosition - 1) / 2);
-    }
+    size_t index = (currentPosition % 2 == 0) ? (currentPosition / 2) : (magicContainer.size() - 1 - ((currentPosition - 1) / 2));
     return magicContainer[index];
 }
+
 
 // Overloading of operator= for assignment between iterators. 
 // It throws an error if the iterators point to different containers.
